@@ -45,13 +45,6 @@ classdef SuperTicTacToe
                 clf;
             end
 
-%             xv = zeros(81,4);
-%             yv = zeros(81,4);
-%             cv = zeros(81,3);
-%             tx = zeros(81,1);
-% 
-%             cntr = 0;
-
             hold on;
             for x = 1:9
                 for y = 1:9
@@ -79,14 +72,14 @@ classdef SuperTicTacToe
                             mytxt = "X";
                         end
                     end
-                    %cntr = cntr+1;
+                    
                     xv = [x x+1 x+1 x];
                     yv = [y y y+1 y+1];
                     
                     if ismember([x,y],MoveList,'rows')
-                        patch(xv,yv,c,'FaceAlpha',0.1);
+                        patch(xv,yv,c,'FaceAlpha',0.2);
                     else
-                        patch(xv,yv,c);
+                        patch(xv,yv,c,'FaceAlpha',0.6);
                     end
                     text(x+0.4,y+0.4,mytxt,"FontSize",14);
 

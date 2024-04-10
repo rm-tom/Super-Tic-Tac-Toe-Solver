@@ -1,19 +1,26 @@
-function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove(A, n, AlwdIters, MvCntr, MxDepth, BestMoves)
+function [MoveProbab,NextMove, BestMoves,AllParm] = FindMove(A, n, AlwdIters, BestMoves, AllParm)
 
 % A recursive function to go to a certain depth in the tree and return the
 % best move out of them all 
-% Inputs: A is the SuperTicTacToe game, n is the depth
+% Inputs: A is the SuperTicTacToe game, n is the depth, AllParms is a set,
+% Alwditers is the number of total child function each function can have.
+% This number is divided into each child cells. Best Moves is the track 
+% predicted by the algorithm. To be used for debuggin only
+% of parameters that control the recursive Algorithm.
+%     AllParm(1) = The number of times the function has been called. 
+%     AllParm(2) = The Maximum that the system went to
+%     AllParm(3) = The maximum limit of the depth
+%     AllParm(4) = The maximum number of childs that each recursion can
+%     take. 
 % Outputs: NextMove is the most likely move from this function, MoveProbab
 % is the likelihood that the move wins
 
-    MaxProceed = 4;
-
-    MvCntr = MvCntr+1;
-    if MxDepth < n
-        MxDepth = n;
+    AllParm(1) = AllParm(1)+1;
+    if AllParm(2) < n
+        AllParm(2) = n;
     end
 
-    if AlwdIters <= 1 || n == 10       
+    if AlwdIters <= 1 || n == AllParm(3)       
         NextMove = A.NumArray(A.NumSteps,:);
         MoveProbab = A.ScoreCurrentGrid();
         return;
@@ -34,7 +41,9 @@ function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove(A, n, Alwd
 
     NextGrid = A.FindNextGrid();
     if NextGrid(1) == 0
-        MaxProceed = 2*MaxProceed;
+        MaxProceed = 2*AllParm(4);
+    else
+        MaxProceed = AllParm(4);
     end
 
     for i = 1:NumMoves
@@ -103,7 +112,7 @@ function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove(A, n, Alwd
 
         % Increase the depth of the simulation to get a better probabvalue.     
         else
-            [AllProbs(i),~,MvCntr, MxDepth,BestMoveChoices{i}] = FindMove(Bs{i},n+1,SentIters,MvCntr, MxDepth,BestMoves);
+            [AllProbs(i),~,BestMoveChoices{i},AllParm] = FindMove(Bs{i},n+1,SentIters,BestMoves,AllParm);
         end
     end
 
@@ -115,7 +124,5 @@ function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove(A, n, Alwd
     NextMove = PossibleMoves(ReturnInd,:);
     BestMoves = BestMoveChoices{ReturnInd};
     BestMoves(n+1,:) = NextMove;
-
-    
 
 end
