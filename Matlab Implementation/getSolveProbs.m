@@ -1,4 +1,17 @@
-function Res = getSolvProbab_4(MyMat, MyRes)
+% A function that takes a every subgame possible game position 
+% and assings a score for to calculate whether X or O wins
+% Developed by: Roshan Mathew Tom (idea from Elliot Svennson)
+% Inputs: None (MyMay, and MyRes can be ignored for now)
+% Outputs: ResFac - A 3^9*5 sized array with 4 possible values 0 to 100
+%             100 corresponds to definite win
+%             0 corresponds to impossible win (usually when the game is drawn or other side wins)
+%             Column 1: Score of O winning
+%             Column 2: Score of X winning
+%             Column 3: Score of game draw
+%             Column 4: Score of O winning if O has the next move
+%             Column 5: Score of X winning if X has the next move
+
+function Res = getSolveProbs(MyMat, MyRes)
 
     persistent GetMatrix;
 
@@ -10,7 +23,7 @@ function Res = getSolvProbab_4(MyMat, MyRes)
     
             for i = 1:NumAll
                 mystr = dec2tern(i-1);
-                WinNum = CheckSlv2(reshape(mystr,3,3));
+                WinNum = CheckSubTicTacToe(reshape(mystr,3,3));
                 %disp(reshape(mystr,3,3));
     
                 if WinNum == 1
@@ -31,7 +44,7 @@ function Res = getSolvProbab_4(MyMat, MyRes)
     
                     for cn = 1:NumPoss                    
                         NewMat = mystr + NumAdd(:,cn);
-                        WinChk = CheckSlv2(reshape(NewMat,3,3));
+                        WinChk = CheckSubTicTacToe(reshape(NewMat,3,3));
     
                         % Only count the cases which are legal
                         if WinChk >= 0

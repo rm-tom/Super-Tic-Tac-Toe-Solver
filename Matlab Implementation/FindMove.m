@@ -1,4 +1,4 @@
-function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove_5(A, n, AlwdIters, MvCntr, MxDepth, BestMoves)
+function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove(A, n, AlwdIters, MvCntr, MxDepth, BestMoves)
 
 % A recursive function to go to a certain depth in the tree and return the
 % best move out of them all 
@@ -103,7 +103,7 @@ function [MoveProbab,NextMove, MvCntr, MxDepth, BestMoves] = FindMove_5(A, n, Al
 
         % Increase the depth of the simulation to get a better probabvalue.     
         else
-            [AllProbs(i),~,MvCntr, MxDepth,BestMoveChoices{i}] = FindMove_5(Bs{i},n+1,SentIters,MvCntr, MxDepth,BestMoves);
+            [AllProbs(i),~,MvCntr, MxDepth,BestMoveChoices{i}] = FindMove(Bs{i},n+1,SentIters,MvCntr, MxDepth,BestMoves);
         end
     end
 

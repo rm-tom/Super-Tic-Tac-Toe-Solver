@@ -9,7 +9,7 @@ figure;
 AvgDiff = zeros(81,1);
 AvgDiffCntr = zeros(81,1);
 for Gm = 1:1000
-    A = SuperTicTacToe_4();
+    A = SuperTicTacToe();
     fprintf("\n ");
     PrString = [];
 

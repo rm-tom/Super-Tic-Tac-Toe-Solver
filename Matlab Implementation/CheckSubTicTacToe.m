@@ -1,9 +1,20 @@
-function Win = CheckSlv2(Mat)
+% A function that checks a regular tic tac toe games and tells the status
+% of the game. 
+% Developed: Roshan Mathew Tom (4/9/2024)
+% Inputs: Mat (a 3x3 matrix corresponding to a board)
+%               0 - No marks
+%               1 - O mark
+%               2 - X mark
+% Outputs: Win
+%     -1: illegal position (e.g. 2 horizontal solutions)
+%     0: Game drawn or no current winner
+%     1: O won
+%     2: X won
+
+function Win = CheckSubTicTacToe(Mat)
 
     % A solution is defined as a condition of three Xs or Os in row (i.e. 
     % if you get a solution then you win the game)
-
-    Win = -1;
 
     ResMatrix = zeros(3,3);
 

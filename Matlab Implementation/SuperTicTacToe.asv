@@ -1,23 +1,26 @@
-classdef SuperTicTacToe_5
+% Main Class that holds the data for the Super Tic Tac Toe game
+% Developed by: Roshan Mathew Tom
+
+classdef SuperTicTacToe
     properties
         MainGrid; % The large 9*9 grid that contains all elements. 
         SolvedGrid; % The small 3*3 grid that stores the solved squares.
         NumSteps % The number of steps completed.
         NumArray % The history of all the steps
         AllWinProbs; % A list of all possibilities of win/lose (solv probab)
-        AllResFac; %All result possibilities.
+        AllResFac; %All result possibilities (From Create Sub Memory)
         ProbabMatrix; % The matrix multiplier to condense all probabilities into one.
         AltProMatrix; % Mirror of ProbabMatrix
     end
     
     methods
-        function obj = SuperTicTacToe_5()
+        function obj = SuperTicTacToe()
             obj.MainGrid = zeros(9,9);
             obj.SolvedGrid = -1*ones(3,3);  % Haven't put zeros since theoretically some small games can be drawn.
             obj.NumSteps = 0;
             obj.NumArray = zeros(81,2);
-            obj.AllWinProbs = getSolvProbab_4();
-            obj.AllResFac = CreateMem();
+            obj.AllWinProbs = getSolveProbs();
+            obj.AllResFac = CreateSubMemory();
 
             obj.ProbabMatrix = [1 0 0 0 0 0 0 0;
                                 0 1 0 0 0 0 0 0;
@@ -31,6 +34,8 @@ classdef SuperTicTacToe_5
             obj.AltProMatrix = abs(obj.ProbabMatrix - 1);
 
         end
+
+
         
         function ViewCurrentStatus(obj,~)
 
@@ -39,6 +44,13 @@ classdef SuperTicTacToe_5
             if nargin == 1
                 clf;
             end
+
+%             xv = zeros(81,4);
+%             yv = zeros(81,4);
+%             cv = zeros(81,3);
+%             tx = zeros(81,1);
+% 
+%             cntr = 0;
 
             hold on;
             for x = 1:9
@@ -67,7 +79,7 @@ classdef SuperTicTacToe_5
                             mytxt = "X";
                         end
                     end
-                    
+                    %cntr = cntr+1;
                     xv = [x x+1 x+1 x];
                     yv = [y y y+1 y+1];
                     
@@ -110,6 +122,7 @@ classdef SuperTicTacToe_5
             SmallGame = obj.MainGrid((x-1)*3+1:x*3,(y-1)*3+1:y*3);
         end
 
+        % Function to add
         function [obj,flg] = AddMove(obj,x,y)
 
             flg = 0;
@@ -133,7 +146,6 @@ classdef SuperTicTacToe_5
             yloc = floor((y-1)/3)+1;
             if obj.SolvedGrid(xloc,yloc) == -1
     
-                %Res = CheckSlv2(obj.ExtractSubGame(xloc,yloc));
                 Res = obj.CheckSolve(obj.ExtractSubGame(xloc,yloc));
                 if Res == -1
                     error("\n Error:: Illegal subgame positions found");
@@ -153,7 +165,6 @@ classdef SuperTicTacToe_5
                 error("\n Error:: Move added in solved position");
             end
 
-            %Res = CheckSlv2(obj.SolvedGrid); % This could potential be error prone since it contains "-1" as some of its enteries. The CheckSlv was written with 0,1,2 in mind.
             TempVar = obj.SolvedGrid;
             TempVar(TempVar == -1) = 0;
             Res = obj.CheckSolve(TempVar);
