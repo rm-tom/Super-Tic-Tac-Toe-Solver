@@ -14,7 +14,12 @@ for i = 1:81
         x = floor(x);
         y = floor(y);
         try
-            [A,flg] = A.AddMove(x,y);
+            MoveList = A.FindNextPossibleMove();
+            if ismember([x,y],MoveList,'rows')
+                [A,flg] = A.AddMove(x,y);
+            else
+                fprintf("\n Illegal Move: Try Again");
+            end
         catch
             fprintf("\n Illegal Move: Pleasy Retry");
             continue;

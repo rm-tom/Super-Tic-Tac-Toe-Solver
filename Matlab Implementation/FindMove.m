@@ -51,11 +51,6 @@ function [MoveProbab,NextMove, BestMoves,AllParm] = FindMove(A, n, AlwdIters, Be
         AllProbs(i) = B{i}.ScoreCurrentGrid();
     end
 
-    %For testing
-    if A.MainGrid(4,1) == 1 && A.MainGrid(4,3) == 1
-        disp('1');
-    end
-
     % Return the win positio if any of the possible moves results in the
     % win of a player.
     if sum(flg == XOval) > 0
